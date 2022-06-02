@@ -33,6 +33,8 @@ pub enum Block {
     InputBlock(InputBlock),
     #[serde(rename = "section")]
     SectionBlock(SectionBlock),
+    #[serde(rename = "rich_text")]
+    RichBlock(SectionBlock),
     #[serde(skip)]
     None,
 }
@@ -48,6 +50,7 @@ impl Block {
             Block::ImageBlock(ImageBlock { .. }) => BlockType::Image,
             Block::InputBlock(InputBlock { .. }) => BlockType::Input,
             Block::SectionBlock(SectionBlock { .. }) => BlockType::Section,
+            Block::RichBlock(SectionBlock { .. }) => BlockType::Section,
             Block::None => BlockType::None,
         }
     }
