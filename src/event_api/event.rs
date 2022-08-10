@@ -295,7 +295,7 @@ pub enum EventCallbackType {
         text: String,
         thread_ts: Option<String>,
         ts: String,
-        user: String,
+        user: Option<String>,
     },
     #[serde(other)]
     Other,
