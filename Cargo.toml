@@ -1,6 +1,6 @@
 [package]
 name = "slack-rust"
-version = "0.0.3"
+version = "0.0.4"
 authors = ["Gompei <shoueigonpei6028@gmail.com>"]
 edition = "2018"
 description = "Slack API Client"
@@ -27,7 +27,7 @@ surf =  { version = "2.3.1", features = ["curl-client", "encoding"] }
 url = "2.2"
 
 [dependencies.async-tls]
-version = "0.11.0"
+version = "0.13.0"
 default-features = false
 features = ["client"]
 
@@ -36,6 +36,6 @@ env_logger = "0.9.0"
 mockall = "0.11.0"
 
 [dev-dependencies.async-tls]
-version = "0.11.0"
+version = "0.13.0"
 default-features = false
 features = ["server"]
