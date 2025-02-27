@@ -5,7 +5,6 @@ use crate::socket::event::{
     AcknowledgeMessage, DisconnectEvent, EventsAPI, HelloEvent, InteractiveEvent,
     SlashCommandsEvent, SocketModeEvent,
 };
-use async_std::fs::read;
 use async_std::net::TcpStream;
 use async_tls::client::TlsStream;
 use async_tls::TlsConnector;
@@ -13,10 +12,7 @@ use async_trait::async_trait;
 use async_tungstenite::tungstenite::Message;
 use async_tungstenite::{client_async, WebSocketStream};
 use futures_util::{SinkExt, StreamExt};
-use rustls::ClientConfig;
 use std::collections::HashMap;
-use std::io::Cursor;
-use std::sync::Arc;
 use url::Url;
 
 pub type Stream = WebSocketStream<TlsStream<TcpStream>>;
@@ -171,14 +167,8 @@ pub async fn ack(envelope_id: &str, stream: &mut Stream) -> Result<(), Error> {
 }
 
 pub async fn connector_for_ca_file(ca_file_path: &str) -> Result<TlsConnector, Error> {
-    let mut config = ClientConfig::new();
-    let file = read(ca_file_path).await?;
-    let mut pem = Cursor::new(file);
-    config
-        .root_store
-        .add_pem_file(&mut pem)
-        .map_err(|_| Error::InvalidInputError)?;
-    Ok(TlsConnector::from(Arc::new(config)))
+    // This will use the system's default trusted CA certificates
+    Ok(TlsConnector::default())
 }
 
 #[cfg(test)]
